@@ -31,6 +31,7 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: coderabbitai/ai-pr-reviewer@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: coderabbitai/ai-pr-reviewer@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
