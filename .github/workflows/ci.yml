@@ -32,7 +32,14 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v5
-      - uses: lbartoszcze/li-agent/action@v1
+      - id: li_review
+        uses: lbartoszcze/li-agent/action@v1
         with:
           severity: warning
           max-comments: '20'
+      - name: Fail when AI finds issues
+        if: ${{ steps.li_review.outputs['issues-found'] != '0' }}
+        run: |
+          echo "AI review found ${{ steps.li_review.outputs['issues-found'] }} issue(s)."
+          echo "Summary: ${{ steps.li_review.outputs.summary }}"
+          exit 1
